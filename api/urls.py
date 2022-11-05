@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import receive_operation
+from api import views
 
 urlpatterns = [
-    path('', receive_operation),
+    path('', views.receive_operation),
 ]
