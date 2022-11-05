@@ -1,5 +1,7 @@
 from django.http import JsonResponse
+from rest_framework.response import Response
 from rest_framework.decorators import api_view
+import json
 #from django.http import HttpResponse
 #from .serializers import Enumserializser
 #from rest_framework import statu, response
@@ -8,10 +10,10 @@ from rest_framework.decorators import api_view
 @api_view(['POST'])
 def receive_operation(request):
     if request.method == 'POST':
-        operation = request.data
-        operation_type = operation['operation_type']
-        _x = operation['x']
-        _y = operation['y']
+        operation = json.loads(request.body.decode())
+        operation_type = operation.get("operation_type")
+        _x = operation.get('x')
+        _y = operation.get('y')
 
         x = int(_x)
         y = int(_y)
@@ -25,4 +27,4 @@ def receive_operation(request):
             z = x*y
        
         response = {"slackUsername": "Oladeindepaul", "operation_type": operation_type, "result":z}
-        return JsonResponse(response)
+        return Response(response)
